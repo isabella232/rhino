@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.mozilla</groupId>
+   <artifactId>rhino</artifactId>
+   <version>1_7R6-RAPIDSEVEN-SNAPSHOT</version>
+
+   <parent>
+      <groupId>com.rapid7</groupId>
+      <artifactId>java-root-pom</artifactId>
+      <version>1.2</version>
+   </parent>
+
+   <scm>
+      <connection>scm:git:git@github.com:rapid7/rhino.git</connection>
+      <developerConnection>scm:git:git@github.com:rapid7/rhino.git</developerConnection>
+      <url>https://github.com/rapid7/rhino</url>
+      <tag>HEAD</tag>
+   </scm>
+
+   <licenses>
+      <license>
+         <name>Mozilla Public License version 1.1</name>
+         <url>http://www.mozilla.org/MPL/MPL-1.1.html</url>
+      </license>
+   </licenses>
+
+   <properties>
+      <!-- The old ant build does a filter replace on the property @IMPLEMENTATION.VERSION@. Maven does a case sensitive match, and thus we have to duplicate the value from the build.properties. The property in build.properties is specified all lowercase. -->
+      <IMPLEMENTATION.VERSION>Rhino 1.6 release 6 2007 09 19</IMPLEMENTATION.VERSION>
+   </properties>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <sourcepath>src</sourcepath>
+               <!-- The following classes were taken from apiClasses.properties -->
+               <sourceFileIncludes> 
+                  <sourceFileInclude>org/mozilla/javascript/Callable.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ClassCache.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ClassShutter.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/CompilerEnvirons.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/Context.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ContextAction.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ContextFactory.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/GeneratedClassLoader.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/EcmaError.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ErrorReporter.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/EvaluatorException.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/Function.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/FunctionObject.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/GeneratedClassLoader.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ImporterTopLevel.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/JavaScriptException.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/RefCallable.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/RhinoException.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/Script.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/Scriptable.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/ScriptableObject.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/SecurityController.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/WrapFactory.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/WrappedException.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/Wrapper.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/Synchronizer.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/optimizer/ClassCompiler.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/debug/DebuggableScript.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/serialize/ScriptableInputStream.java</sourceFileInclude>
+                  <sourceFileInclude>org/mozilla/javascript/serialize/ScriptableOutputStream.java</sourceFileInclude>
+               </sourceFileIncludes>
+            </configuration>
+         </plugin> 
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <phase>generate-sources</phase>
+                  <goals>
+                     <goal>add-source</goal>
+                  </goals>
+                  <configuration>
+                     <sources>
+                        <!-- The xmlimplsrc were explicitly excluded by the Rapid7 build. deprecatedsrc was also not being built. -->
+                        <source>toolsrc</source>
+                        <source>src</source>
+                     </sources>
+                  </configuration>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.3</source>
+               <target>1.3</target>
+               <compilerArgument />
+               <showWarnings>true</showWarnings>
+               <showDeprecation>true</showDeprecation>
+               <fork>true</fork>
+            </configuration>
+         </plugin>
+      </plugins>
+      <resources>
+         <resource>
+            <directory>src</directory>
+            <filtering>true</filtering>
+            <includes>
+               <include>org/mozilla/javascript/resources/Messages.properties</include>
+            </includes>
+         </resource>
+         <resource>
+            <directory>src</directory>
+            <includes>
+               <include>**/*.properties</include>
+            </includes>
+            <excludes>
+               <exclude>org/mozilla/javascript/resources/Messages.properties</exclude>
+            </excludes>
+         </resource>
+         <resource>
+            <directory>toolsrc</directory>
+            <includes>
+               <include>**/*.properties</include>
+            </includes>
+         </resource>
+      </resources> 
+   </build>
+</project>
