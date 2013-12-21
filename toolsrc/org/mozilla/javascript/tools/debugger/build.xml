@@ -37,18 +37,14 @@
 <project name="toolsrc" default="help" basedir=".">
 
   <target name="properties">
-    <property name="swing-ex-url" value="http://java.sun.com/products/jfc/tsc/articles/treetable2/downloads/src.zip"/>
-    <available file="downloaded/AbstractCellEditor.java"
-               property="swing-ex-available"/>
   </target>
 
-  <target name="get-swing-ex" unless="swing-ex-available">
+  <target name="get-swing-ex" >
     <!-- Download source from Sun's site, unzip it, remove
          the files we don't need, and change the package
     -->
     <mkdir dir="downloaded"/>
-    <get src="${swing-ex-url}" dest="downloaded/swingExSrc.zip"/>
-    <unzip src="downloaded/swingExSrc.zip" dest="downloaded/">
+    <unzip src="${r7.libs.dir}/rhino/src.zip" dest="downloaded/">
       <patternset>
           <include name="AbstractCellEditor.java"/>
           <include name="JTreeTable.java"/>
@@ -56,6 +52,7 @@
           <include name="TreeTableModelAdapter.java"/>
       </patternset>
     </unzip>
+  
     <replace file="downloaded/AbstractCellEditor.java">
        <replacetoken>import java.awt.Component;</replacetoken>
        <replacevalue>
@@ -95,7 +92,7 @@
     <delete file="downloaded/swingExSrc.zip"/>
   </target>
 
-  <target name="download" depends="properties,get-swing-ex"/>
+  <target name="download" depends="get-swing-ex"/>
 
   <target name="help" depends="properties">
 <echo>The following targets are available with this build file:

@@ -50,6 +50,7 @@ Requires Ant version 1.2
 
   <target name="compile-most">
     <javac srcdir="src"
+           optimize="${optimize}"
            destdir="${classes}"
            includes="org/**/*.java"
            excludes="org/**/jdk15/*.java"
@@ -70,6 +71,7 @@ Requires Ant version 1.2
 
   <target name="compile-jdk15" if="jdk15">
     <javac srcdir="src"
+           optimize="${optimize}"
            destdir="${classes}"
            includes="org/**/jdk15/*.java"
            deprecation="on"
